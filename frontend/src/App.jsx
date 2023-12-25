@@ -1,11 +1,21 @@
+import MyNav from "./components/navbar";
+import MyLayout from "./layout";
+import Create from "./components/create";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 
 function App() {
   return (
-    <div>
-      <h1 className="text-danger">Hello World</h1>
-    </div>
+      <BrowserRouter>
+        <MyNav />
+        
+        <Routes>
+          <Route exact path="/" element={<MyLayout />}></Route>
+          <Route exact path="new" element={<Create />}></Route>
+        </Routes>
+    </BrowserRouter>
+
   );
 }
 

@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.side-item{
+  cursor: pointer;
+  border-bottom: 2px solid darkgray;
+}
+
+.side-item:hover{
+  box-shadow: 0 0 5px grey;
+}
+
+.side-item p{
+  margin-bottom: 4px;
+}
