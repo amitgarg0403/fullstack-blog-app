@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 const SideBar = (props) => {
   const [posts, setPost] = useState([])
   const getPost = () =>{
-    fetch("https://jsonplaceholder.typicode.com/posts")
-    .then(response=>response.json())
-    .then(postArr=>{
-      setPost(postArr);
+    axios.get("https://jsonplaceholder.typicode.com/posts")
+    .then(response=>{
+      setPost(response.data);
     })
   }
 
@@ -25,7 +25,7 @@ const SideBar = (props) => {
             return(
               <div className="row side-item pb-1" onClick={display.bind(this,post)} key={index}>
                 <h5>{(post.title).substring(0,30)}...</h5>
-                <p className="fst-italic mt-1">Science </p>
+                <p className="fst-italic mt-1">Cat. - Science </p>
                 <small>{(post.body).substring(0,50)}....</small>
               </div>
             )
