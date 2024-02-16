@@ -4,29 +4,33 @@ import axios from "axios";
 const Create = () => {
     const [title, updateTitle] = useState("");
     const [category, updateCategory] = useState("CHOOSE");
-    const [img, updateImg] = useState("IMAGE NOT AVAILABLE");
+    const [img, updateImg] = useState("");
     const [body, updateBody] = useState("");
     const [message, updateMessage] = useState("");
+    const [error, updateError] = useState("");
 
     const createPost = async ()=>{
-        let newPost = { title: title, category: category, img: img, body: body };
-        console.log(newPost);
-        
-        let url = "http://localhost:5000/new";
-        axios.post(url, newPost)
-        .then(response=>{
-            alert('Posted')
-            console.log(response.data);
-            updateTitle("");
-            updateCategory("CHOOSE");
-            updateBody("");
-            updateImg("IMAGE NOT AVAILABLE");
-            updateMessage("Thank You for Posting !");
-        })
-        .catch((err)=>{
-            updateMessage("Something went Wrong!")
-            console.log(err)
-        })
+        if(title === "" || category === "CHOOSE" || body === ""){
+            updateError("Except Image, One of the Field is Empty!")
+        }else{
+            let newPost = { title: title, category: category, img: img, body: body };
+            console.log(newPost);
+            let url = "http://localhost:5000/create";
+            axios.post(url, newPost)
+            .then(response=>{
+                console.log(response.data);
+                updateTitle("");
+                updateCategory("CHOOSE");
+                updateBody("");
+                updateImg("");
+                updateMessage("Thank You for Posting!");
+                window.location.href = "/";
+            })
+            .catch((err)=>{
+                updateError("Something went Wrong!")
+                console.log(err)
+            })
+        }
 
     }
 
@@ -39,6 +43,7 @@ const Create = () => {
             <div className="container bg-warning rounded-4 shadow p-4 pe-4 mt-5 mb-5">
             <h2 className="text-center text-danger mb-4">Create New Blog</h2>
             <p className="text-center text-success fst-italic fs-6"> {message}</p>
+            <p className="text-center text-danger fst-italic fs-6"> {error}</p>
 
             <div className="row">
                 <div className="col-lg-3 mt-4">
@@ -85,7 +90,8 @@ const Create = () => {
                     <h4 className="text-start text-danger ms-3"> Image(opt) :</h4>
                 </div>
                 <div className="col-lg-9 mt-4">
-                    <input type="text" className="form-control" onChange={obj=>{updateImg(obj.target.value)}} placeholder="Enter Image URL only"/>
+                    <input type="text" className="form-control" onChange={obj=>{updateImg(obj.target.value)}} 
+                    value={img} placeholder="Enter Image URL only"/>
                 </div>
             </div>  
 

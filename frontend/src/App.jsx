@@ -12,7 +12,7 @@ function App() {
         
         <Routes>
           <Route exact path="/" element={<MyLayout />}></Route>
-          <Route exact path="new" element={<Create />}></Route>
+          <Route exact path="create" element={<Create />}></Route>
         </Routes>
     </BrowserRouter>
 
