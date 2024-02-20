@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Blog = require("./models/blog")
+const User = require("./models/user")
 
 // Middlewares
 app.use(cors());
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 // MongoDB Connection
 mongoose.connect("mongodb://127.0.0.1:27017/BlogDB")
+// mongoose.connect("mongodb+srv://admin:admin@cluster0.spskcbu.mongodb.net/blogDB")
 .then(console.log("MongoDb connected"))
 .catch((err)=>{console.log(err)})
 
@@ -27,11 +29,13 @@ app.get('/',(req,res)=>{
 
 //  Create Post route
 app.post("/create", async(req,res)=>{
+    console.log(req.body)
     const newEntry = new Blog({
         title: req.body.title,
         category: req.body.category,
         img: req.body.img,
-        body: req.body.body
+        body: req.body.body,
+        userId: req.body.userId
     })
     await Blog.create(newEntry)
     .then(result=> console.log("New Post created successfully"))
@@ -49,6 +53,15 @@ app.get("/getdata", async (req,res)=>{
     .catch(err=>console.log(err))
 })
 
+app.get("/getdata/:userId", async (req,res)=>{
+    console.log(req.params)
+    await Blog.find(req.params)
+    .then(response=>{ 
+        res.send(response); 
+    })
+    .catch(err=>console.log(err))
+})
+
 // Delete Post Data
 app.delete("/deldata/:id", (req,res)=>{
     let id = req.params.id;
@@ -58,6 +71,26 @@ app.delete("/deldata/:id", (req,res)=>{
         res.sendStatus(200);
     })
     .catch(err=>console.log(err))
+})
+
+
+// User Routes
+app.post('/newuser', async(req,res)=>{
+    console.log(req.body)
+    await User.create(req.body)
+    res.sendStatus(200);
+})
+
+app.post('/login', async(req,res)=>{
+    let userEmail = req.body.email;
+    await User.find({email: userEmail})
+    .then(response=>{
+        console.log("from Backend-" + response)
+        res.status(200).send(response);
+    })
+    .catch(err=>{
+        res.status(400).json({error:"User Not Found"})
+    })
 })
 
 // (Should filter method apply to backend or frontend ? )

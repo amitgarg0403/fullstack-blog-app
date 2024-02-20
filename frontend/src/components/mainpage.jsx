@@ -6,6 +6,7 @@ const MainPage = (props) => {
   const getPost = () =>{
     axios.get("http://localhost:5000/getdata")
     .then(response=>{
+      console.log(response.data);
       setPost(response.data);
     })
   }
@@ -35,7 +36,7 @@ const MainPage = (props) => {
                       <div className="col-lg-8"></div>
 
                       <div className="col-lg-4 sticky-bottom text-end">
-                        <h6 className="fst-italic">Created By :- UserName</h6>
+                        <h6 className="fst-italic">Created By :- {localStorage.getItem("name")}</h6>
                         <p className="text-secondary fst-italic">last update - {post.updatedAt}</p>
                       </div>
                     

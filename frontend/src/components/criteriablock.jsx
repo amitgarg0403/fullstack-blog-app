@@ -19,6 +19,8 @@ const CriteriaBlock = (props) => {
                         <option value="Science">Science</option>
                         <option value="Arts">Arts</option>
                         <option value="Fashion">Fashion</option>
+                        <option value="Motivational">Motivati.</option>
+                        <option value="Food">Food</option>
                         <option value="Business">Business</option>
                         <option value="News">News</option>
                         <option value="Politics">Politics</option>

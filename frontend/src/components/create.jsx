@@ -8,13 +8,20 @@ const Create = () => {
     const [body, updateBody] = useState("");
     const [message, updateMessage] = useState("");
     const [error, updateError] = useState("");
+    const [userID, updateUserID] = useState(localStorage.getItem("id"));
+
+
 
     const createPost = async ()=>{
         if(title === "" || category === "CHOOSE" || body === ""){
             updateError("Except Image, One of the Field is Empty!")
         }else{
-            let newPost = { title: title, category: category, img: img, body: body };
+            let newPost = { title: title, category: category, img: img, body: body};
             console.log(newPost);
+            newPost.userId = userID;
+            console.log(newPost);
+            alert("Post Success");
+
             let url = "http://localhost:5000/create";
             axios.post(url, newPost)
             .then(response=>{
@@ -67,6 +74,7 @@ const Create = () => {
                         <option>Arts</option>
                         <option>Fashion</option>
                         <option>Motivational</option>
+                        <option>Food</option>
                         <option>Business</option>
                         <option>News</option>
                         <option>Politics</option>

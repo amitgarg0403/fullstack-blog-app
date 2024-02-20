@@ -7,11 +7,16 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Login from './components/login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <App />
-);
+// if login then render App component or vice versa
+  let loginStatus = localStorage.getItem("id");
+  if(loginStatus !== null){
+    root.render(<App />)
+  }else{
+    root.render(<Login />)
+  }
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

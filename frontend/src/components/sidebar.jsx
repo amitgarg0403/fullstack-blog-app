@@ -4,12 +4,15 @@ import axios from "axios";
 const SideBar = (props) => {
   const [posts, setPost] = useState([]);
   const [sort, setSort] = useState(false);
-  const [deleteId, setDeleteId] = useState("0");
 
 
   const getPost = () =>{
-    axios.get("http://localhost:5000/getdata")
+    let userid = localStorage.getItem("id")
+    console.log(userid);
+    let url = "http://localhost:5000/getdata/"+userid;
+    axios.get(url)
     .then(response=>{
+      console.log(response.data)
       if(sort === true)
       setPost(response.data.reverse());
       else
@@ -27,9 +30,8 @@ const SideBar = (props) => {
     props.clickedId(post._id)
   }
 
-  const delPost = async(post)=>{
-    setDeleteId(post._id);
-    await axios.delete("http://localhost:5000/deldata/"+post._id)
+  const delPost = async(id)=>{
+    await axios.delete("http://localhost:5000/deldata/"+id)
     .then(response=>{
       getPost();
     })
@@ -48,8 +50,8 @@ const SideBar = (props) => {
                 <p className="fst-italic mt-1"> {post.category} </p>
                 <small className="d-inline-block text-truncate" style={{maxWidth: "250px"}}>{post.body}</small>
                 </div>
-                <div className="col-lg-1 p-1 me-2">
-                  <button className="btn btn-sm trash" onClick={delPost.bind(this,post)}><i className="fa fa-trash fa-lg"></i></button>
+                <div className="col-lg-1 p-1 me-3" onClick={(e) => e.stopPropagation()}>
+                  <button className="btn btn-sm trash" onClick={()=>{delPost(post._id)}}><i className="fa fa-trash fa-lg"></i></button>
                 </div>
               </div>
             )
