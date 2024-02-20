@@ -21,6 +21,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/BlogDB")
 .then(console.log("MongoDb connected"))
 .catch((err)=>{console.log(err)})
 
+//----------------  CRUD Routes  -------------------
 
 //  Home route "http://localhost:5000"
 app.get('/',(req,res)=>{
@@ -54,7 +55,7 @@ app.get("/getdata", async (req,res)=>{
 })
 
 app.get("/getdata/:userId", async (req,res)=>{
-    console.log(req.params)
+    // console.log(req.params)
     await Blog.find(req.params)
     .then(response=>{ 
         res.send(response); 
@@ -73,14 +74,40 @@ app.delete("/deldata/:id", (req,res)=>{
     .catch(err=>console.log(err))
 })
 
+// Edit Post Data
+app.get("/edit/:_id", async(req,res)=>{
+    let editId = req.params;
+    await Blog.findById(editId)
+    .then(response=>{
+        res.status(200).json(response)
+    })
+    .catch(err=>console.log(err))
+})
 
-// User Routes
+app.put("/update/:_id", async(req,res)=>{
+    let editId = req.params;
+    let updateData = req.body;
+    console.log(editId)
+    await Blog.findByIdAndUpdate(editId, updateData )
+    .then(response=>{
+        res.status(200).json(response)
+    })
+    .catch(err=>console.log(err))
+})
+
+// -------------User Routes--------------
+
+// Register
 app.post('/newuser', async(req,res)=>{
     console.log(req.body)
     await User.create(req.body)
-    res.sendStatus(200);
+    .then(response=>{
+        res.sendStatus(200);
+    })
+    .catch(err=>console.log(err))
 })
 
+// Login
 app.post('/login', async(req,res)=>{
     let userEmail = req.body.email;
     await User.find({email: userEmail})

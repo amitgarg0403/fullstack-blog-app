@@ -6,7 +6,6 @@ const MainPage = (props) => {
   const getPost = () =>{
     axios.get("http://localhost:5000/getdata")
     .then(response=>{
-      console.log(response.data);
       setPost(response.data);
     })
   }

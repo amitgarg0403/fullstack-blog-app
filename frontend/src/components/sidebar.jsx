@@ -37,21 +37,38 @@ const SideBar = (props) => {
     })
     .catch(err=>console.log(err))
   }
+
+  const editPost = async(post)=>{
+    console.log(post._id);
+    localStorage.setItem("editItem", post._id)
+    window.location.href = "/edit";
+    // let url = "http://localhost:5000/edit"
+    // await axios.post(url, post)
+    // .then(response=>
+    //   console.log(response.data)
+    // )
+    // .catch(err=>console.log(err))
+  }
   
     return (
-      <div className="bg-light pt-1 p-3">
+      <div className="bg-light pt-1 pe-3 ps-3">
         {
           posts.map((post,index)=>{
             if(props.showFilter === "All" || props.showFilter === post.category )
             return(
               <div className="row side-item pb-1" onClick={mainDisplay.bind(this,post)} key={index}>
                 <div className="col">
-                <h5 className="mb-0 mt-1 d-inline-block text-truncate" style={{maxWidth: "250px"}}>{post.title}</h5>
-                <p className="fst-italic mt-1"> {post.category} </p>
-                <small className="d-inline-block text-truncate" style={{maxWidth: "250px"}}>{post.body}</small>
+                  <h5 className="mb-0 mt-1 d-inline-block text-truncate" style={{maxWidth: "250px"}}>{post.title}</h5>
+                  <p className="fst-italic mt-1"> {post.category} </p>
+                  <small className="d-inline-block text-truncate" style={{maxWidth: "250px"}}>{post.body}</small>
                 </div>
                 <div className="col-lg-1 p-1 me-3" onClick={(e) => e.stopPropagation()}>
-                  <button className="btn btn-sm trash" onClick={()=>{delPost(post._id)}}><i className="fa fa-trash fa-lg"></i></button>
+                  <div className="row">
+                    <button className="btn btn-sm trash" onClick={()=>{delPost(post._id)}}><i className="fa fa-trash fa-lg"></i></button>
+                  </div>
+                  <div className="row mt-4">
+                    <button className="btn btn-sm trash" onClick={()=>{editPost(post)}}><i className="fa fa-pen-to-square fa-lg"></i></button>
+                  </div>
                 </div>
               </div>
             )

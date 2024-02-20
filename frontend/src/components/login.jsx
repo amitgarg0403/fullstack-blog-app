@@ -107,7 +107,18 @@ const Login = () =>{
                 </div>
                 <div className="col-lg-2"></div>
             </div>
-            
+            <div className="row mt-1">
+                <div className="col-lg-9 p-3">
+                    <div>
+                        <h6 className="text-center">Dummy Account</h6>
+                        <p className="text-center"> email - test@gmail.com, password - 123</p>
+                        <p></p>
+                    </div>
+                </div>
+                <div className="col-lg-3 mt-4">
+                    <h6 className="mt-1">2024 &copy; Amit Garg</h6>
+                </div>
+            </div>
         </div>
     )
 }
