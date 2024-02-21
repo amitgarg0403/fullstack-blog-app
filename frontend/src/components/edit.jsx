@@ -11,7 +11,7 @@ const EditPost = () =>{
 
 
     const edit = ()=>{
-        let editId = localStorage.getItem("editItem")
+        let editId = localStorage.getItem("editItem");
         let url = "http://localhost:5000/edit/"+editId;
         axios.get(url)
         .then(response=>{

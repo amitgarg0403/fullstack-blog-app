@@ -9,19 +9,19 @@ const Login = () =>{
     const [newUser, setNewUser] = useState({ name:"", email:"", password:""})
 
     const getLogin = async()=>{
-        console.log(loginData);
         let url = "http://localhost:5000/login";
-        await axios.post(url,loginData)
+        await axios.post(url, loginData)
         .then(response=>{
-            if(response.data.length>0)
+            let user = response.data;
+            console.log(user);
+            if(user)
             {
-                console.log(response);
-                let user = response.data[0];
                 setMessage("Login Successfull");
                 localStorage.setItem("name", user.name)
                 localStorage.setItem("email", user.email)
                 localStorage.setItem("id", user._id)
-                window.location.reload();
+                setLoginData({ email:"", password:""})
+                window.location.href="/"
             }
             else{
                 setMessage("User not Found!")
@@ -72,7 +72,7 @@ const Login = () =>{
                     </div>
                     <div className="mb-3">
                         <label>Enter Password</label>
-                        <input type="text" className="form-control" name="password" onChange={registerHandler} value={newUser.password}/>
+                        <input type="password" className="form-control" name="password" onChange={registerHandler} value={newUser.password}/>
                     </div>
                     <div className="mb-3 text-center">
                         <button className="btn btn-sm btn-primary p-2" onClick={getRegister}> Register </button>

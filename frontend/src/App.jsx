@@ -13,8 +13,8 @@ function App() {
 
         <Routes>
           <Route exact path="/" element={<MyLayout />}></Route>
-          <Route exact path="create" element={<Create />}></Route>
-          <Route exact path="edit" element={<EditPost />}></Route>
+          <Route exact path="/create" element={<Create />}></Route>
+          <Route exact path="/edit" element={<EditPost />}></Route>
         </Routes>
     </BrowserRouter>
   );
